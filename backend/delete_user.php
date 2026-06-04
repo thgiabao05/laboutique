@@ -1,0 +1,49 @@
+<?php
+// Đường dẫn: BACKEND/delete_user.php
+ini_set('display_errors', 0);
+error_reporting(0);
+
+if (isset($_SERVER['HTTP_ORIGIN'])) {
+    header("Access-Control-Allow-Origin: {$_SERVER['HTTP_ORIGIN']}");
+    header('Access-Control-Allow-Credentials: true');
+}
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'])) header("Access-Control-Allow-Methods: POST, OPTIONS");
+    if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'])) header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+    exit(0);
+}
+header("Content-Type: application/json; charset=UTF-8");
+
+include_once 'db.php';
+
+$data = json_decode(file_get_contents("php://input"));
+
+if (!empty($data->UserID)) {
+    try {
+        // Chống xóa tài khoản Gốc (Super Admin)
+        if (isset($data->Email) && $data->Email === 'admin@thebasic.com') {
+            echo json_encode(["status" => "error", "message" => "Bảo mật: Không thể xóa tài khoản Quản trị gốc!"]);
+            exit;
+        }
+
+        $query = "DELETE FROM users WHERE UserID = :id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':id', $data->UserID);
+
+        if ($stmt->execute()) {
+            echo json_encode(["status" => "success", "message" => "Đã xóa vĩnh viễn tài khoản khỏi hệ thống."]);
+        } else {
+            echo json_encode(["status" => "error", "message" => "Không thể xóa người dùng này."]);
+        }
+    } catch (PDOException $e) {
+        // Bắt lỗi ràng buộc khóa ngoại (User này đã từng đặt đơn hàng)
+        if ($e->getCode() == '23000') {
+             echo json_encode(["status" => "error", "message" => "Không thể xóa: Tài khoản này đang chứa lịch sử đơn hàng. Hãy hủy đơn hàng của họ trước."]);
+        } else {
+             echo json_encode(["status" => "error", "message" => "Lỗi CSDL: " . $e->getMessage()]);
+        }
+    }
+} else {
+    echo json_encode(["status" => "error", "message" => "Thiếu ID người dùng."]);
+}
+?>

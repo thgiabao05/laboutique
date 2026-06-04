@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    container_name: perfume_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: PerfumeShopDB
+    # DÒNG NÀY CỰC KỲ QUAN TRỌNG ĐỂ PHP NHẬN DIỆN ĐƯỢC MYSQL
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3326:3306"
+      
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: perfume_pma
+    restart: always
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "8080:80"
