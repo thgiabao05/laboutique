@@ -38,7 +38,7 @@ export function Profile() {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch('https://laboutique.free.je/BACKEND/get_orders.php', {
+      const response = await fetch('https://laboutique.free.je/backend/get_orders.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ UserID: user.UserID })
@@ -293,7 +293,7 @@ export function Profile() {
 
                             const comment = prompt("Nhập ý kiến bình luận của bạn về sản phẩm/dịch vụ:");
                             
-                            fetch("https://laboutique.free.je/BACKEND/add_review.php", {
+                            fetch("https://laboutique.free.je/backend/add_review.php", {
                               method: "POST",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify({

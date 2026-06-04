@@ -42,7 +42,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
     
     if (move_uploaded_file($_FILES['image']['tmp_name'], $targetFilePath)) {
         // Lưu đường dẫn ảnh vào Database
-        $imageUrl = 'https://laboutique.free.je/BACKEND/' . $targetFilePath;
+        $imageUrl = 'https://laboutique.free.je/backend/' . $targetFilePath;
     } else {
         echo json_encode(["status" => "error", "message" => "Lỗi khi lưu file ảnh vào hệ thống."]);
         exit;

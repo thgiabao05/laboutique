@@ -49,7 +49,7 @@ export function Checkout() {
 
     try {
       // 1. Gọi API lưu đơn hàng thực tế vào hệ thống (MySQL)
-      const orderResponse = await fetch('https://laboutique.free.je/BACKEND/create_order.php', {
+      const orderResponse = await fetch('https://laboutique.free.je/backend/create_order.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

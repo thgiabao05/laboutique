@@ -13,7 +13,7 @@ export function ProductListPage() {
 
   // Gọi API từ WAMP khi trang vừa load xong
   useEffect(() => {
-    fetch("https://laboutique.free.je/BACKEND/products.php")
+    fetch("https://laboutique.free.je/backend/products.php")
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.log("Lỗi gọi API: ", err))
