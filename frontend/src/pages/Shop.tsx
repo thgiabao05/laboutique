@@ -20,7 +20,7 @@ export function Shop() {
   const [selectedCategory, setSelectedCategory] = useState<'ALL' | 1 | 2>('ALL');
 
   useEffect(() => {
-    fetch("http://laboutique.free.je/BACKEND/products.php")
+    fetch("https://laboutique.free.je/BACKEND/products.php")
       .then(res => res.json())
       .then(data => {
         setProducts(data);

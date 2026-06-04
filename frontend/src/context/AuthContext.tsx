@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updateProfile = async (phone: string, addresses: string[]): Promise<boolean> => {
     if (!user) return false;
     try {
-      const response = await fetch('http://localhost/BACKEND/update_profile.php', {
+      const response = await fetch('https://laboutique.free.je/BACKEND//update_profile.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

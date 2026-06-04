@@ -17,7 +17,7 @@ export default function OrdersManager() {
 
   // Gọi API lấy toàn bộ đơn hàng
   const fetchOrders = () => {
-    fetch("http://localhost/BACKEND/get_all_orders.php")
+    fetch("https://laboutique.free.je/BACKEND/get_all_orders.php")
       .then(res => res.json())
       .then(data => {
         if (data.status === 'success') {
@@ -40,7 +40,7 @@ export default function OrdersManager() {
     if (!window.confirm(`Xác nhận đổi trạng thái đơn ${orderId}?`)) return;
 
     try {
-      const response = await fetch("http://localhost/BACKEND/update_order_status.php", {
+      const response = await fetch("https://laboutique.free.je/BACKEND/update_order_status.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ OrderID: orderId, OrderStatus: newStatus })

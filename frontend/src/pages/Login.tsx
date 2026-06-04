@@ -20,7 +20,7 @@ export function Login() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://laboutique.free.je/BACKEND/login.php", {
+      const response = await fetch("https://laboutique.free.je/BACKEND/login.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ Username: username, Password: password }) 

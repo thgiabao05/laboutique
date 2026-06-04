@@ -38,7 +38,7 @@ export function Register() {
     setIsLoading(true); // Bắt đầu khóa nút bấm
 
     try {
-      const response = await fetch("http://laboutique.free.je/BACKEND/register.php", {
+      const response = await fetch("https://laboutique.free.je/BACKEND/register.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // Ánh xạ biến 'fullname' của state thành key 'fullName' cho PHP
@@ -65,7 +65,7 @@ export function Register() {
     setError(""); setSuccess("");
 
     try {
-      const response = await fetch("http://laboutique.free.je/BACKEND/verify_otp.php", {
+      const response = await fetch("https://laboutique.free.je/BACKEND/verify_otp.php", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp: otpCode })

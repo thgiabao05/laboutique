@@ -85,7 +85,7 @@ export function Admin() {
   }, [activeTab, user.Role]);
 
   const fetchProducts = () => {
-    fetch("http://localhost/BACKEND/products.php")
+    fetch("https://laboutique.free.je/BACKEND/get_products.php")
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error("Lỗi tải Sản phẩm:", err));
@@ -93,7 +93,7 @@ export function Admin() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost/BACKEND/get_users_admin.php");
+      const res = await fetch("https://laboutique.free.je/BACKEND/get_users_admin.php");
       const data = await res.json();
       if (data.status === 'success') setUsersList(data.users);
     } catch (err) { console.error("Lỗi tải người dùng:", err); }
@@ -101,7 +101,7 @@ export function Admin() {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch("http://localhost/BACKEND/get_dashboard_stats.php");
+      const res = await fetch("https://laboutique.free.je/BACKEND/get_dashboard_stats.php");
       const data = await res.json();
       if (data.status === 'success') setStats(data.stats);
     } catch (err) { console.error("Lỗi tải Thống kê:", err); }
@@ -109,7 +109,7 @@ export function Admin() {
 
   const fetchReviews = async () => {
     try {
-      const res = await fetch("http://localhost/BACKEND/get_reviews_admin.php");
+      const res = await fetch("https://laboutique.free.je/BACKEND/get_reviews_admin.php");
       const data = await res.json();
       if (data.status === 'success') setReviewsList(data.reviews);
     } catch (err) { console.error("Lỗi tải Đánh giá:", err); }
@@ -130,7 +130,7 @@ export function Admin() {
     if (selectedFile) dataToSend.append("image", selectedFile);
 
     try {
-      const response = await fetch("http://localhost/BACKEND/save_product.php", { method: "POST", body: dataToSend });
+      const response = await fetch("https://laboutique.free.je/BACKEND/save_product.php", { method: "POST", body: dataToSend });
       const data = await response.json();
       if (data.status === "success") { alert(data.message); setShowForm(false); fetchProducts(); } else alert(data.message);
     } catch (err) { alert("Lỗi kết nối!"); }
@@ -139,7 +139,7 @@ export function Admin() {
   const handleDelete = async (productId: number) => {
     if (!window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi cửa hàng không?")) return;
     try {
-      const response = await fetch("http://localhost/BACKEND/delete_product.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ProductID: productId }) });
+      const response = await fetch("https://laboutique.free.je/BACKEND/delete_product.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ProductID: productId }) });
       const data = await response.json();
       if (data.status === "success") { alert(data.message); fetchProducts(); } else alert(data.message);
     } catch (err) { alert("Lỗi kết nối!"); }
@@ -148,7 +148,7 @@ export function Admin() {
   const handleRoleChange = async (userId: number, newRole: string) => {
     if(!window.confirm(`Xác nhận cấp quyền [${newRole}] cho UserID: ${userId}?`)) return;
     try {
-      const res = await fetch("http://localhost/BACKEND/update_user_role.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ UserID: userId, Role: newRole }) });
+      const res = await fetch("https://laboutique.free.je/BACKEND/update_user_role.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ UserID: userId, Role: newRole }) });
       const data = await res.json();
       if(data.status === 'success') { alert('Cập nhật quyền thành công!'); fetchUsers(); }
     } catch (err) { alert("Lỗi kết nối máy chủ"); }
@@ -159,7 +159,7 @@ export function Admin() {
   const handleSaveUser = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost/BACKEND/update_user_info.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ UserID: userFormData.UserID, FullName: userFormData.FullName, Email: userFormData.Email, Phone: userFormData.Phone }) });
+      const res = await fetch("https://laboutique.free.je/BACKEND/update_user_info.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ UserID: userFormData.UserID, FullName: userFormData.FullName, Email: userFormData.Email, Phone: userFormData.Phone }) });
       const data = await res.json();
       if (data.status === 'success') { alert(data.message); setShowUserForm(false); fetchUsers(); } else alert(data.message);
     } catch (err) { alert("Lỗi kết nối máy chủ"); }
@@ -169,7 +169,7 @@ export function Admin() {
     if (email === 'admin@thebasic.com') { alert("Không thể xóa tài khoản Quản trị gốc!"); return; }
     if (!window.confirm(`Xóa vĩnh viễn tài khoản [${email}]?`)) return;
     try {
-      const res = await fetch("http://localhost/BACKEND/delete_user.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ UserID: userId, Email: email }) });
+      const res = await fetch("https://laboutique.free.je/BACKEND/delete_user.php", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ UserID: userId, Email: email }) });
       const data = await res.json();
       if (data.status === 'success') { alert(data.message); fetchUsers(); } else alert(data.message);
     } catch (err) { alert("Lỗi kết nối!"); }
@@ -179,7 +179,7 @@ export function Admin() {
   const handleDeleteReview = async (reviewId: number) => {
     if (!window.confirm("Bạn có chắc chắn muốn ẩn/xóa bình luận đánh giá này khỏi hệ thống không?")) return;
     try {
-      const res = await fetch("http://localhost/BACKEND/delete_review.php", {
+      const res = await fetch("https://laboutique.free.je/BACKEND/delete_review.php", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ReviewID: reviewId })
       });

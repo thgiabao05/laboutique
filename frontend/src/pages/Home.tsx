@@ -17,7 +17,7 @@ export function Home() {
 
   // Tự động gọi API lấy 4 sản phẩm mới nhất làm "Best Sellers"
   useEffect(() => {
-    fetch("http://laboutique.free.je/BACKEND/products.php")
+    fetch("https://laboutique.free.je/BACKEND/products.php")
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
